@@ -10,7 +10,7 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         // fazer uma conexão HTTP e buscar os tTop 250 Filmes
-        String url = "https://mocki.io/v1/9a7c1ca9-29b4-4eb3-8306-1adb9d159060";
+        String url = "https://alura-imdb-api.herokuapp.com/movies";
         URI endereco = URI.create(url);
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(endereco).GET().build();
@@ -25,7 +25,13 @@ public class App {
         for (Map<String,String> filme : listaDeFilmes) {
             System.out.println("\u001b[1mTítulo: " + "\u001b[0m" + filme.get("title"));
             System.out.println("\u001b[1mPoster: " + "\u001b[0m" + filme.get("image"));
+            String imdbRating = filme.get("imDbRating");
+            Double imdbRatingDouble = Double.parseDouble(imdbRating);
+            long roundedRating = Math.round(imdbRatingDouble);
             System.out.println("\u001b[1mClassificação: " + "\u001b[0m" + filme.get("imDbRating"));
+            for (int i = 0; i < roundedRating; i++) {
+                System.out.print("\u2b50");
+            }
             System.out.println();
         }
     }
